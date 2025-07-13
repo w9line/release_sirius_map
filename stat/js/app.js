@@ -1,9 +1,10 @@
 const mapContainer = document.getElementById("mapContainer");
 const mapWrapper = document.getElementById("mapWrapper");
 const mapImage = document.getElementById("mapImage");
-let scale = 1;
+const searchInput = document.getElementById("searchInput");
 const minScale = 1;
 const maxScale = 21;
+let scale = 1;
 let isDraggingMap = false;
 let didDragMap = false;
 let isDraggingMarker = false;
@@ -13,10 +14,6 @@ let currentRating = 5;
 let startX, startY, scrollLeft, scrollTop;
 let lastClientX, lastClientY;
 let currentMarkerData = {};
-const searchInput = document.getElementById("searchInput");
-
-// mapContainer.style.width = '800px';
-// mapContainer.style.height = '100%';
 
 mapContainer.addEventListener("wheel", (e) => {
 if (e.ctrlKey) {

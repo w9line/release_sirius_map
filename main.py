@@ -9,9 +9,14 @@ from datetime import datetime
 
 app = FastAPI()
 MARKERS_FILE = "markers.json"
+REVIEWS_FILE = "reviews.json"
 
 if not os.path.exists(MARKERS_FILE):
     with open(MARKERS_FILE, "w", encoding="utf-8") as f:
+        json.dump([], f)
+
+if not os.path.exists(REVIEWS_FILE):
+    with open(REVIEWS_FILE, "w", encoding="utf-8") as f:
         json.dump([], f)
 
 class Marker(BaseModel):
@@ -24,7 +29,6 @@ class Marker(BaseModel):
     description: str = ""
     image: str = ""  
     type: str = ""  
-
 
 def load_markers():
     with open(MARKERS_FILE, "r", encoding="utf-8") as f:
@@ -59,11 +63,7 @@ async def delete_marker(marker_id: int):
     save_markers(filtered)
     return {"status": "deleted"}
 
-REVIEWS_FILE = "reviews.json"
 
-if not os.path.exists(REVIEWS_FILE):
-    with open(REVIEWS_FILE, "w", encoding="utf-8") as f:
-        json.dump([], f)
 
 class Review(BaseModel):
     marker_id: int
