@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Интерактивная карта чертового сириуса</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css ">
+  <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+  <nav class="navigation-menu">
+    <div class="left-block">
+      <button class="btn" id="toggleMenu" onclick="toggleMenu()">
+        меню
+      </button>
+      <button class="btn" id="toggleFilterBtn" onclick="toggleFilters()">
+        <i class="fas fa-eye"></i> все фильтры
+      </button>
+    </div>
+
+    <div class="search-block" style="display: flex;">
+      <h4>Поиск места</h4>
+<input type="text" id="searchInput" placeholder="Введите название..." autocomplete="off">
+    </div>
+ 
+
+
+  </nav>
+
+  <div class="first_part">
+    <section class="left-side">
+  <div id="filterPanel">
+
+  <div class="filters-list">
+    <div class="filter-option">
+      <label><input type="checkbox" style="display: none;" data-filter="cafe" checked> <i class="fas fa-coffee"></i>  Кафе</label>
+    </div>
+    <div class="filter-option">
+      <label><input type="checkbox"style="display: none;" data-filter="museum" checked><i class="fas fa-landmark"></i> Музей</label>
+    </div>
+    <div class="filter-option">
+      <label><input type="checkbox"style="display: none;" data-filter="park" checked> <i class="fas fa-tree"></i> Парк</label>
+    </div>
+    <div class="filter-option">
+      <label><input type="checkbox"style="display: none;" data-filter="shop" checked> <i class="fas fa-shopping-bag"></i> Магазин</label>
+    </div>
+    <div class="filter-option">
+      <label><input type="checkbox"style="display: none;" data-filter="other" checked> <i class="fas fa-question-circle"></i> Другое</label>
+    </div>
+  </div>
+  <hr>
+  <h4>Метки на карте</h4>
+
+
+  <div id="markerList" class="marker-list"></div>
+
+
+
+
+
+</div>
+  <div class="modals">
+  <div id="markerInfoModal">
+    <div class="modal-section info-section">
+      <h3 id="infoTitle"></h3>
+      <p><strong>Тип:</strong> <span id="infoType"></span></p>
+      <p><strong>Адрес:</strong> <span id="infoAddress"></span></p>
+      <p id="infoDescription"></p>
+      <img id="infoImage" src="" style="display:none;">
+      <div id="ratingInfo">
+        <strong>Средняя оценка:</strong>
+        <span id="averageRating">—</span>/5
+      </div>
+    </div>
+<hr>
+    <div class="modal-section review-form-section">
+        <details>
+
+          <summary class="btn"><b>Оставить отзыв </b></summary>
+          <div id="ratingSelector">
+            <strong>Оцените место:</strong>
+            <div style="display: flex; gap: 5px; margin-top: 5px;">
+              <div class="rating-star" data-rating="1"></div>
+              <div class="rating-star" data-rating="2"></div>
+              <div class="rating-star" data-rating="3"></div>
+              <div class="rating-star" data-rating="4"></div>
+              <div class="rating-star" data-rating="5"></div>
+            </div>
+          </div>
+          <textarea id="reviewText" placeholder="Напишите ваш отзыв..." rows="3"></textarea>
+          <input type="text" id="reviewAuthor" placeholder="Ваше имя (необязательно)">
+          <button class="btn" onclick="submitReview()">Оставить отзыв</button>
+        </details>
+    </div>
+<hr style="margin-top: 5px;">
+    <div class="modal-section reviews-list-section">
+      <details>
+        <summary class="btn">Отзывы</summary>
+          
+        <div id="reviewsList"></div>
+      </details>
+    </div>
+    <button class="btn" onclick="deleteCurrentMarker()">Удалить метку</button>
+    <button class="btn" onclick="hideInfo()">Закрыть</button>
+  </div>
+  <div id="markerFormModal">
+    <h3>Добавить место</h3>
+    <input type="text" id="formTitle" placeholder="Название">
+    <input type="text" id="formAddress" placeholder="Адрес">
+    <div class="select-wrapper ">
+      <select id="formType" class="custom-select btn">
+        <option value="">Категория</option>
+        <option value="cafe">Кафе</option>
+        <option value="museum">Музей</option>
+        <option value="park">Парк</option>
+        <option value="shop">Магазин</option>
+        <option value="other">Другое</option>
+      </select>
+    </div>
+
+    <label for="formImage" class="file-upload-button btn">
+      Выбрать файл
+    </label>
+    <input class="file-upload-input" type="file" id="formImage">
+
+  <textarea id="formDescription" rows="3" placeholder="Описание"></textarea>
+    <button class="btn" onclick="submitMarker()">Сохранить</button>
+    <button class="btn" onclick="hideForm()">Отмена</button>
+  </div> 
+  </div>
+    </section>  
+    <section class="main-side"><div class="map-container" id="mapContainer">
+      <div class="map-wrapper" id="mapWrapper">
+        <img src="image/map.jpg" alt="Карта" class="map-image" id="mapImage" />
+      </div>
+    </section>
+    <div class="nav-on-map">
+          <button class="btn" onclick="zoomMap(0.1)" title="Приблизить"><i class="fas fa-plus"></i></button>
+          <button class="btn" onclick="zoomMap(-0.1)" title="Отдалить"><i class="fas fa-minus"></i></button>
+          <button class="btn" onclick="resetMap()" title="Сбросить"><i class="fas fa-search"></i></button>
+    </div>
+
+  </div>
+  <main>
+    ss
+  </main>
+<script src="js/app.js"></script>
+
+</body>
+</html>

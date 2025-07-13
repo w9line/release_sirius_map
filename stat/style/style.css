@@ -1,0 +1,666 @@
+:root {
+    --primary-color: #ffffff;
+    --secondary-color: #000000;
+    --success-color: #000000;
+    --danger-color: #000000;
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --border-color: #000000;
+    --hover-color: #000000;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --marker-cafe: #FFA726;
+    --marker-museum: #42A5F5;
+    --marker-park: #66BB6A;
+    --marker-shop: #AB47BC;
+    --marker-other: #90A4AE;
+    --scrollbar-bg: #fff;
+    --scrollbar-thumb: #000;
+    --marker-label-bg: rgba(0, 0, 0, 0.7);
+    --marker-card-bg: #000000;
+    --marker-card-text: #ffffff;
+    --marker-card-secondary: #d3d2d2;
+    --white:white;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.5px;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow: hidden;
+}
+
+*::-webkit-scrollbar {
+    margin-left: 10px;
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-bg);
+    border: 1px solid var(--primary-color);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border: 3px solid var(--secondary-color);
+}
+
+#mapContainer {
+    overflow: auto; 
+    scrollbar-width: none;
+}
+
+.first_part {
+    width: 100%;
+    display: flex;
+    height: calc(100vh - 30px);
+    position: relative;
+}
+
+.left-side {
+    width: 20%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-side {
+    width: 100%;
+    height: 100%;
+}
+/* .navigation-menu-bottom{
+  position: absolute;
+  width: 100%;
+  height: 202px;
+  background-color: black;
+  color: white;
+  top:80% ;
+} */
+.navigation-menu {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    display: flex;
+    padding: 10px;
+    align-items: center;
+
+    & * {
+    margin-right: 10px;
+
+  }
+    & h4{
+      max-width: 100%;
+      min-width: max-content;
+    }
+    /* & #toggleMenu{
+      position: absolute;
+      left: 0;
+      transform: translateX(50%);
+    }
+    & #toggleFilterBtn{
+      position: absolute;
+      left: 100px;
+      transform: translateX(50%);
+    } */
+}
+.left-block{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & button {
+      margin: 0 20px;
+
+  }
+}
+
+.search-block{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+#filterPanel {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 15px;
+    border-radius: 0;
+    min-width: 200px;
+    height: 100%;
+    box-shadow: 3px 3px 0 var(--primary-color);
+}
+
+#filterPanel h4 {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 24px;
+    color: var(--secondary-color);
+    text-align: center;
+}
+.filters-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px;
+  background-color: var(--background-color);
+  border-top: 1px solid var(--border-color);
+}
+
+.filter-option label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 8px 16px;
+  border: 2px solid var(--border-color);
+  transition: all 0.3s ease-in-out;
+  background-color: transparent;
+  user-select: none;
+}
+
+.filter-option label:hover {
+  background-color: var(--border-color);
+  color: var(--background-color);
+      transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--secondary-color);
+}
+
+.filter-option input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-color);
+  background-color: var(--background-color);
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-option input[type="checkbox"]:checked {
+  background-color: var(--secondary-color); 
+  border-color: var(--secondary-color);
+}
+
+.filter-option input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 6px;
+  height: 12px;
+  border: 2px solid var(--primary-color); 
+}
+
+.filter-option input[type="checkbox"]:active {
+  transform: scale(0.95);
+}
+
+input[type="checkbox"] {
+    accent-color: var(--secondary-color);
+}
+
+.map-container {
+    position: relative;
+    display: inline-block;
+    overflow: auto;
+    cursor: grab;
+    width: 100%;
+    height: fit-content;
+    border: 1px solid var(--border-color);
+    background-color: #f0f0f0;
+}
+
+.map-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-origin: 0 0;
+    transition: transform 0.1s ease;
+    user-select: none;
+    scale: min(1,2);
+}
+
+.map-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+}
+
+.marker {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marker-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+}
+
+.marker-icon::before {
+    font-size: 6px;
+}
+
+.marker-label {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 12px;
+    background: var(--marker-label-bg);
+    color: var(--white);
+    padding: 2px 6px;
+    border-radius: 4px;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.marker:hover .marker-label {
+    opacity: 1;
+}
+
+.marker.cafe .marker-icon {
+    background-color: var(--marker-cafe);
+}
+
+.marker.museum .marker-icon {
+    background-color: var(--marker-museum);
+}
+
+.marker.park .marker-icon {
+    background-color: var(--marker-park);
+}
+
+.marker.shop .marker-icon {
+    background-color: var(--marker-shop);
+}
+
+.marker.other .marker-icon {
+    background-color: var(--marker-other);
+}
+
+.marker-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.marker-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid var(--secondary-color);
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    min-height: 80px;
+    transition: background-color 0.2s ease;
+}
+
+.marker-card:nth-child(2n) {
+    border-right: 1px solid var();
+}
+
+.marker-card:nth-of-type(3n) {
+    border-top: 2px solid var(--secondary-color);;
+}
+
+.marker-card:nth-of-type(3n+1) {
+    border-top: 2x solid var(--secondary-color);;
+}
+
+.marker-card:nth-child(4n+1) {
+    border-left: 3px solid var(--secondary-color);
+}
+
+.marker-card:last-child {
+    border-bottom: none;
+}
+
+.marker-info-part {
+    flex-grow: 1;
+}
+
+.marker-info-part h5 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+}
+
+.marker-info-part p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--marker-card-secondary);
+}
+
+.marker-image-part {
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.marker-default {
+    display: none;
+}
+
+button {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 6px 10px;
+    margin-top: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+#toggleFilterBtn{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.btn {
+    padding: 7px 15px;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    margin: 3px;
+    border-right: 2px solid var(--secondary-color);
+    border-bottom: 2px solid var(--secondary-color);
+     list-style: none;
+}
+.btn::-webkit-details-marker {
+  display: none;
+}
+.btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--secondary-color);
+}
+
+#markerFormModal, #markerInfoModal {
+    display: none;
+    position: absolute;
+    top: 0;    left: 100%;
+
+    background: var(--primary-color);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    width: 300px;
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+}
+#infoTitle{
+    color: var(--secondary-color);
+}
+#markerInfoModal {
+    /* direction: rtl; */
+    overflow-y: scroll;
+    max-height: 100vh;
+}
+
+#reviewText,#formDescription{
+  max-width: 90%;
+  
+  &:focus {
+    outline: none;
+    box-shadow: 4px 4px 0 var(--secondary-color);
+    transform: translate(-2px, -2px);
+}
+}
+
+#markerFormModal input,#searchInput,
+#markerFormModal textarea,
+#markerFormModal button,
+#markerInfoModal input,
+#markerInfoModal textarea,
+#markerInfoModal button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 2px solid var(--primary-color);
+      &:focus {
+    outline: none;
+    box-shadow: 4px 4px 0 var(--secondary-color);
+    transform: translate(-2px, -2px);
+}
+}
+.file-upload-input {
+  display: none;
+}
+
+.file-upload-button {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.file-upload-button:hover {
+  background: var(--hover-color);
+}
+
+.nav-on-map {
+  position: absolute;
+  top:  12px;
+  right: 20px;
+  z-index: 1110;
+  max-height: 40vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--background-color);
+  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px auto;
+  cursor: pointer;
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: #000;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+
+#markerInfoModal img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+.rating-star {
+    width: 30px;
+    height: 30px;
+    background: #ccc;
+    clip-path: polygon(
+        50% 0%,
+        61% 35%,
+        98% 35%,
+        68% 57%,
+        79% 91%,
+        50% 70%,
+        21% 91%,
+        32% 57%,
+        2% 35%,
+        39% 35%
+    );
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.rating-star.selected {
+    background-color: gold;
+    transform: rotate(1deg);
+}
+
+.rating-star.selected:hover {
+    background-color: gold;
+    transform: rotate(1deg);
+}
+
+.rating-star:hover {
+    background-color: rgb(243, 229, 151);
+    transform: rotate(-5deg);
+}
+
+.input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid var(--secondary-color);
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+    min-width: 0;
+}
+
+.input:focus {
+    outline: none;
+    box-shadow: 4px 4px 0 var(--primary-color);
+    transform: translate(-2px, -2px);
+}
+@keyframes flash {
+    0% { border-color: var(--primary-color); scale: 1; }
+    50% { border-color: var(--primary-color); }
+    100% { border-color: var(--primary-color); transform: scale(1.5); }
+}
+
+.flash-border::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(2);
+    animation: flash 0.2s linear infinite;
+    background: var(--primary-color);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: translate(-20%, -20%);
+    z-index: -2;
+}
+
+@media screen and (max-width: 768px) {
+    .first_part {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .left-side, .main-side {
+        width: 100%;
+    }
+    
+    .navigation-menu {
+        padding-left: 10px;
+        justify-content: space-around;
+        &    * {
+        margin-right: 0;
+      }
+        
+    }
+    
+
+    
+    .marker-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .marker-image-part {
+        width: 100%;
+        height: 150px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #filterPanel {
+        min-width: auto;
+    }
+    
+    #markerFormModal, #markerInfoModal {
+        width: 90%;
+        left: 5%;
+    }
+    
+    .rating-star {
+        width: 25px;
+        height: 25px;
+    }
+}
